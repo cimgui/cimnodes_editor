@@ -1,4 +1,4 @@
 [submodule "ImGuiColorTextEdit"]
 	path = imgui-node-editor
-	url = https://github.com/thedmd/imgui-node-editor
-	branch = master
+	url = https://github.com/sonoro1234/imgui-node-editor
+	branch = ImVec2operator
