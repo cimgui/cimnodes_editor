@@ -59,7 +59,30 @@ local copyfile = cpp2ffi.copyfile
 --------------------------------------------------------
 -----------------------------do it----------------------
 --------------------------------------------------------
+local function custom_headerNO(outtab, def)
+	local types = {"NodeId","LinkId","PinId"}
+	local has_types = false
+	for i,typ in ipairs(types) do
+		if def.args:match(typ) then
+			if not def.args:match(typ.."%s*%*") then error"not has_types_ptr" end
+			has_types = true 
+		end
+		if def.ret and def.ret:match(typ) then 
+			if not def.ret:match(typ.."%s*%*") then error"not has_types_ptr" end
+			has_types = true 
+		end
+	end
+	if not has_types then return end
 
+	local args = def.args
+	local ret = def.ret or ""
+	for i,typ in ipairs(types) do
+		args = args:gsub(typ.."%s*%*","uintptr_t")
+		ret = ret:gsub(typ.."%s*%*","uintptr_t")
+	end
+	table.insert(outtab,"CIMGUI_API "..ret.." ".. def.ov_cimguiname ..args..";//custom generation\n")
+	return true --false --true
+end
 -------------funtion for parsing implot headers
 local function parseImGuiHeader(header, names, modulename)
 	--prepare parser
@@ -74,7 +97,7 @@ local function parseImGuiHeader(header, names, modulename)
 	parser.skipped = cimgui_skipped
 	parser.cimgui_inherited =  dofile([[../../cimgui/generator/output/structs_and_enums.lua]])
 	parser.name_conversion = {Style="cimnodes_editor_Style"}
-	
+	parser.custom_header = custom_header
 	local include_cmd = COMPILER=="cl" and [[ /I ]] or [[ -I ]]
 	local extra_includes = include_cmd.." ../../cimgui "
 	--..include_cmd.." ../ImGuiColorTextEdit/vendor/regex/include "
