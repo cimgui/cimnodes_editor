@@ -98,6 +98,7 @@ local function parseImGuiHeader(header, names, modulename)
 	parser.cimgui_inherited =  dofile([[../../cimgui/generator/output/structs_and_enums.lua]])
 	parser.name_conversion = {Style="cimnodes_editor_Style"}
 	parser.custom_header = custom_header
+	parser.forced_opaque = {SafeType=true}
 	local include_cmd = COMPILER=="cl" and [[ /I ]] or [[ -I ]]
 	local extra_includes = include_cmd.." ../../cimgui "
 	--..include_cmd.." ../ImGuiColorTextEdit/vendor/regex/include "
