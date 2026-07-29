@@ -322,7 +322,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -345,7 +345,7 @@
       "argsT": [
         {
           "name": "id",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId id)",
@@ -368,7 +368,7 @@
       "argsT": [
         {
           "name": "id",
-          "type": "PinId"
+          "type": "PinId*"
         },
         {
           "name": "kind",
@@ -413,7 +413,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -434,7 +434,7 @@
       "argsT": [
         {
           "name": "pinId",
-          "type": "PinId"
+          "type": "PinId*"
         }
       ],
       "argsoriginal": "(PinId pinId)",
@@ -482,7 +482,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -566,7 +566,7 @@
       "argsT": [
         {
           "name": "linkId",
-          "type": "LinkId"
+          "type": "LinkId*"
         }
       ],
       "argsoriginal": "(LinkId linkId)",
@@ -589,7 +589,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -612,7 +612,7 @@
       "argsT": [
         {
           "name": "linkId",
-          "type": "LinkId"
+          "type": "LinkId*"
         }
       ],
       "argsoriginal": "(LinkId linkId)",
@@ -635,7 +635,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -919,7 +919,7 @@
       "argsT": [
         {
           "name": "linkId",
-          "type": "LinkId"
+          "type": "LinkId*"
         },
         {
           "name": "direction",
@@ -1308,7 +1308,7 @@
       "argsT": [
         {
           "name": "linkId",
-          "type": "LinkId"
+          "type": "LinkId*"
         },
         {
           "name": "startPinId",
@@ -1339,7 +1339,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -1380,7 +1380,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -1405,7 +1405,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -1430,7 +1430,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -1637,7 +1637,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -1658,7 +1658,7 @@
       "argsT": [
         {
           "name": "pinId",
-          "type": "PinId"
+          "type": "PinId*"
         }
       ],
       "argsoriginal": "(PinId pinId)",
@@ -1753,7 +1753,7 @@
       "argsT": [
         {
           "name": "linkId",
-          "type": "LinkId"
+          "type": "LinkId*"
         }
       ],
       "argsoriginal": "(LinkId linkId)",
@@ -1776,7 +1776,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -1817,15 +1817,15 @@
       "argsT": [
         {
           "name": "id",
-          "type": "LinkId"
+          "type": "LinkId*"
         },
         {
           "name": "startPinId",
-          "type": "PinId"
+          "type": "PinId*"
         },
         {
           "name": "endPinId",
-          "type": "PinId"
+          "type": "PinId*"
         },
         {
           "name": "color",
@@ -1914,7 +1914,7 @@
       "argsT": [
         {
           "name": "pinId",
-          "type": "PinId"
+          "type": "PinId*"
         }
       ],
       "argsoriginal": "(PinId pinId)",
@@ -2450,7 +2450,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         }
       ],
       "argsoriginal": "(NodeId nodeId)",
@@ -2516,7 +2516,7 @@
       "argsT": [
         {
           "name": "linkId",
-          "type": "LinkId"
+          "type": "LinkId*"
         },
         {
           "name": "append",
@@ -2545,7 +2545,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         },
         {
           "name": "append",
@@ -2597,7 +2597,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         },
         {
           "name": "size",
@@ -2624,7 +2624,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         },
         {
           "name": "editorPosition",
@@ -2651,7 +2651,7 @@
       "argsT": [
         {
           "name": "nodeId",
-          "type": "NodeId"
+          "type": "NodeId*"
         },
         {
           "name": "z",
