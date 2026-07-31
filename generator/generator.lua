@@ -14,11 +14,8 @@ local COMPILER, CPRE, INTERNAL_GENERATION, COMMENTS_GENERATION = cpp2ffi.GetScri
 --------------------------------------------------------------------------
 local cimgui_manuals = {
 ax_NodeEditor_NodeId="NodeId",
-NodeId_destroy="NodeId",
 ax_NodeEditor_PinId="PinId",
-PinId_destroy="PinId",
 ax_NodeEditor_LinkId="LinkId",
-LinkId_destroy="LinkId",
 ax_NodeEditor_NodeId_value="NodeId",
 ax_NodeEditor_PinId_value="PinId",
 ax_NodeEditor_LinkId_value="LinkId",
@@ -108,12 +105,80 @@ local function parseImGuiHeader(header, names, modulename)
 	
 	return parser
 end
+
+-- These types are replaced with the POD NodeId_c/PinId_c/LinkId_c structs from
+-- cimnodes_editor_template.h and their ConvertToCPP_/ConvertFromCPP_ helpers,
+-- the same way cimgui handles ImVec2/ImVec2_c.
+local pod_ids = {NodeId = true, PinId = true, LinkId = true}
+
+local function use_pod_ids(parser)
+	-- the id names now belong to the POD structs declared in the template, so
+	-- drop the opaque forward declarations the parser emitted for them
+	for i, section in ipairs(parser.structs_and_enums) do
+		for id in pairs(pod_ids) do
+			section = section:gsub("typedef struct "..id.." "..id..";\n", "")
+			section = section:gsub("struct "..id..";\n", "")
+		end
+		parser.structs_and_enums[i] = section
+	end
+
+	for _, defs in pairs(parser.defsT) do
+		for _, def in ipairs(defs) do
+			local namespace = def.namespace and def.namespace.."::" or ""
+
+			-- returned by value in C++: pointer to a static -> POD by value,
+			-- built by ConvertFromCPP_ like any other non POD return
+			local returned_id = (def.ret or ""):match("^(%a+)%*$")
+			if def.nonUDT == "opaque" and pod_ids[returned_id] then
+				def.nonUDT = 1
+				def.conv = returned_id
+				def.ret = returned_id.."_c"
+			end
+
+			for _, arg in ipairs(def.argsT) do
+				local pointed_id = arg.type:match("^(%a+)%*$")
+				if pod_ids[arg.type] then
+					-- passed by value in C++: pointer that gets dereferenced -> POD by value
+					def.args = def.args:gsub("([(,])"..arg.type.."%*%s*"..arg.name.."([,)])",
+						"%1"..arg.type.."_c "..arg.name.."%2")
+					def.call_args = def.call_args:gsub("([(,])%*"..arg.name.."([,)])",
+						"%1ConvertToCPP_"..arg.type.."("..arg.name..")%2")
+				elseif pod_ids[pointed_id] then
+					-- a real pointer (array or out argument): the POD has the same
+					-- layout as the C++ id, so the buffer is cast in place
+					def.args = def.args:gsub("([(,])"..pointed_id.."%*%s*"..arg.name.."([,)])",
+						"%1"..pointed_id.."_c* "..arg.name.."%2")
+					def.call_args = def.call_args:gsub("([(,])"..arg.name.."([,)])",
+						"%1reinterpret_cast<"..namespace..pointed_id.."*>("..arg.name..")%2")
+				end
+			end
+		end
+	end
+end
+
+-- Describe the ids in the machine readable outputs the way cimgui describes
+-- ImVec2, so downstream binding generators see the POD layout the header now
+-- declares instead of an empty opaque struct.
+local function pod_ids_metadata(parser)
+	local t = parser.structs_and_enums_table
+	for id in pairs(pod_ids) do
+		assert(t.structs[id] and not next(t.structs[id]), id.." is not an empty struct")
+		t.structs[id] = {[1] = {name = "value", type = "uintptr_t"}}
+		t.opaque_structs[id] = nil
+		parser.opaque_structs[id] = nil
+		t.nonPOD[id] = true
+		t.nonPOD_used[id] = true
+	end
+end
+
 --generation
 print("------------------generation with "..COMPILER.."------------------------")
 local modulename = "cimnodes_editor"
 local parser1 = parseImGuiHeader([[../imgui-node-editor/imgui_node_editor.h]], {[[imgui_node_editor]]}, modulename)
 parser1:do_parse()
+use_pod_ids(parser1)
 parser1:cimgui_generation(cimgui_header)
+pod_ids_metadata(parser1)
 parser1:save_output()
 
 print"all done!!"

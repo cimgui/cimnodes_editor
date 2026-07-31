@@ -439,17 +439,20 @@
     "ImVec2ih": "inherited",
     "ImVec4": "inherited",
     "ImVector": "inherited",
+    "LinkId": true,
+    "NodeId": true,
+    "PinId": true,
     "SafePointerType": true,
     "SafeType": true
   },
   "nonPOD_used": {
     "ImVec2": "inherited",
-    "ImVec4": "inherited"
+    "ImVec4": "inherited",
+    "LinkId": true,
+    "NodeId": true,
+    "PinId": true
   },
   "opaque_structs": {
-    "LinkId": "ax::NodeEditor::LinkId",
-    "NodeId": "ax::NodeEditor::NodeId",
-    "PinId": "ax::NodeEditor::PinId",
     "SafePointerType": "ax::NodeEditor::Details::SafePointerType",
     "SafeType": "ax::NodeEditor::Details::SafeType"
   },
@@ -525,9 +528,24 @@
         "type": "float"
       }
     ],
-    "LinkId": [],
-    "NodeId": [],
-    "PinId": [],
+    "LinkId": [
+      {
+        "name": "value",
+        "type": "uintptr_t"
+      }
+    ],
+    "NodeId": [
+      {
+        "name": "value",
+        "type": "uintptr_t"
+      }
+    ],
+    "PinId": [
+      {
+        "name": "value",
+        "type": "uintptr_t"
+      }
+    ],
     "cimnodes_editor_Style": [
       {
         "name": "NodePadding",

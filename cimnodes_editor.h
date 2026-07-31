@@ -5,15 +5,33 @@
 
 #include "cimgui.h"
 
-#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+// POD counterparts of ax::NodeEditor::NodeId/PinId/LinkId. Those wrap a single
+// uintptr_t but have user declared constructors, so they are not ABI compatible
+// and are not guaranteed to be passed and returned like a plain struct. Their
+// layout should be the same though, which allows functions that take in an
+// array of ids (e.g. `ax_NodeEditor_GetOrderedNodeIds()`) to still work.
+typedef struct NodeId_c NodeId_c;
+struct NodeId_c
+{
+    uintptr_t value;
+};
+typedef struct PinId_c PinId_c;
+struct PinId_c
+{
+    uintptr_t value;
+};
+typedef struct LinkId_c LinkId_c;
+struct LinkId_c
+{
+    uintptr_t value;
+};
 
-typedef struct NodeId NodeId;
-typedef struct LinkId LinkId;
-typedef struct PinId PinId;
+#ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+typedef struct NodeId_c NodeId;
+typedef struct PinId_c PinId;
+typedef struct LinkId_c LinkId;
+
 typedef struct EditorContext EditorContext;
-struct NodeId;
-struct LinkId;
-struct PinId;
 typedef enum {
     Input,
     Output
@@ -152,11 +170,8 @@ typedef struct SafeType SafeType;
 
 typedef struct SafePointerType SafePointerType;
 
-typedef struct NodeId NodeId;
 
-typedef struct LinkId LinkId;
 
-typedef struct PinId PinId;
 
 #else
 #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
@@ -200,8 +215,8 @@ CIMGUI_API void ax_NodeEditor_PushStyleVar_Vec4(StyleVar varIndex,const ImVec4_c
 CIMGUI_API void ax_NodeEditor_PopStyleVar(int count);
 CIMGUI_API void ax_NodeEditor_Begin(const char* id,const ImVec2_c size);
 CIMGUI_API void ax_NodeEditor_End(void);
-CIMGUI_API void ax_NodeEditor_BeginNode(NodeId* id);
-CIMGUI_API void ax_NodeEditor_BeginPin(PinId* id,PinKind kind);
+CIMGUI_API void ax_NodeEditor_BeginNode(NodeId_c id);
+CIMGUI_API void ax_NodeEditor_BeginPin(PinId_c id,PinKind kind);
 CIMGUI_API void ax_NodeEditor_PinRect(const ImVec2_c a,const ImVec2_c b);
 CIMGUI_API void ax_NodeEditor_PinPivotRect(const ImVec2_c a,const ImVec2_c b);
 CIMGUI_API void ax_NodeEditor_PinPivotSize(const ImVec2_c size);
@@ -210,65 +225,65 @@ CIMGUI_API void ax_NodeEditor_PinPivotAlignment(const ImVec2_c alignment);
 CIMGUI_API void ax_NodeEditor_EndPin(void);
 CIMGUI_API void ax_NodeEditor_Group(const ImVec2_c size);
 CIMGUI_API void ax_NodeEditor_EndNode(void);
-CIMGUI_API bool ax_NodeEditor_BeginGroupHint(NodeId* nodeId);
+CIMGUI_API bool ax_NodeEditor_BeginGroupHint(NodeId_c nodeId);
 CIMGUI_API ImVec2_c ax_NodeEditor_GetGroupMin(void);
 CIMGUI_API ImVec2_c ax_NodeEditor_GetGroupMax(void);
 CIMGUI_API ImDrawList* ax_NodeEditor_GetHintForegroundDrawList(void);
 CIMGUI_API ImDrawList* ax_NodeEditor_GetHintBackgroundDrawList(void);
 CIMGUI_API void ax_NodeEditor_EndGroupHint(void);
-CIMGUI_API ImDrawList* ax_NodeEditor_GetNodeBackgroundDrawList(NodeId* nodeId);
-CIMGUI_API bool ax_NodeEditor_Link(LinkId* id,PinId* startPinId,PinId* endPinId,const ImVec4_c color,float thickness);
-CIMGUI_API void ax_NodeEditor_Flow(LinkId* linkId,FlowDirection direction);
+CIMGUI_API ImDrawList* ax_NodeEditor_GetNodeBackgroundDrawList(NodeId_c nodeId);
+CIMGUI_API bool ax_NodeEditor_Link(LinkId_c id,PinId_c startPinId,PinId_c endPinId,const ImVec4_c color,float thickness);
+CIMGUI_API void ax_NodeEditor_Flow(LinkId_c linkId,FlowDirection direction);
 CIMGUI_API bool ax_NodeEditor_BeginCreate(const ImVec4_c color,float thickness);
-CIMGUI_API bool ax_NodeEditor_QueryNewLink_Nil(PinId* startId,PinId* endId);
-CIMGUI_API bool ax_NodeEditor_QueryNewLink_Vec4(PinId* startId,PinId* endId,const ImVec4_c color,float thickness);
-CIMGUI_API bool ax_NodeEditor_QueryNewNode_Nil(PinId* pinId);
-CIMGUI_API bool ax_NodeEditor_QueryNewNode_Vec4(PinId* pinId,const ImVec4_c color,float thickness);
+CIMGUI_API bool ax_NodeEditor_QueryNewLink_Nil(PinId_c* startId,PinId_c* endId);
+CIMGUI_API bool ax_NodeEditor_QueryNewLink_Vec4(PinId_c* startId,PinId_c* endId,const ImVec4_c color,float thickness);
+CIMGUI_API bool ax_NodeEditor_QueryNewNode_Nil(PinId_c* pinId);
+CIMGUI_API bool ax_NodeEditor_QueryNewNode_Vec4(PinId_c* pinId,const ImVec4_c color,float thickness);
 CIMGUI_API bool ax_NodeEditor_AcceptNewItem_Nil(void);
 CIMGUI_API bool ax_NodeEditor_AcceptNewItem_Vec4(const ImVec4_c color,float thickness);
 CIMGUI_API void ax_NodeEditor_RejectNewItem_Nil(void);
 CIMGUI_API void ax_NodeEditor_RejectNewItem_Vec4(const ImVec4_c color,float thickness);
 CIMGUI_API void ax_NodeEditor_EndCreate(void);
 CIMGUI_API bool ax_NodeEditor_BeginDelete(void);
-CIMGUI_API bool ax_NodeEditor_QueryDeletedLink(LinkId* linkId,PinId* startId,PinId* endId);
-CIMGUI_API bool ax_NodeEditor_QueryDeletedNode(NodeId* nodeId);
+CIMGUI_API bool ax_NodeEditor_QueryDeletedLink(LinkId_c* linkId,PinId_c* startId,PinId_c* endId);
+CIMGUI_API bool ax_NodeEditor_QueryDeletedNode(NodeId_c* nodeId);
 CIMGUI_API bool ax_NodeEditor_AcceptDeletedItem(bool deleteDependencies);
 CIMGUI_API void ax_NodeEditor_RejectDeletedItem(void);
 CIMGUI_API void ax_NodeEditor_EndDelete(void);
-CIMGUI_API void ax_NodeEditor_SetNodePosition(NodeId* nodeId,const ImVec2_c editorPosition);
-CIMGUI_API void ax_NodeEditor_SetGroupSize(NodeId* nodeId,const ImVec2_c size);
-CIMGUI_API ImVec2_c ax_NodeEditor_GetNodePosition(NodeId* nodeId);
-CIMGUI_API ImVec2_c ax_NodeEditor_GetNodeSize(NodeId* nodeId);
-CIMGUI_API void ax_NodeEditor_CenterNodeOnScreen(NodeId* nodeId);
-CIMGUI_API void ax_NodeEditor_SetNodeZPosition(NodeId* nodeId,float z);
-CIMGUI_API float ax_NodeEditor_GetNodeZPosition(NodeId* nodeId);
-CIMGUI_API void ax_NodeEditor_RestoreNodeState(NodeId* nodeId);
+CIMGUI_API void ax_NodeEditor_SetNodePosition(NodeId_c nodeId,const ImVec2_c editorPosition);
+CIMGUI_API void ax_NodeEditor_SetGroupSize(NodeId_c nodeId,const ImVec2_c size);
+CIMGUI_API ImVec2_c ax_NodeEditor_GetNodePosition(NodeId_c nodeId);
+CIMGUI_API ImVec2_c ax_NodeEditor_GetNodeSize(NodeId_c nodeId);
+CIMGUI_API void ax_NodeEditor_CenterNodeOnScreen(NodeId_c nodeId);
+CIMGUI_API void ax_NodeEditor_SetNodeZPosition(NodeId_c nodeId,float z);
+CIMGUI_API float ax_NodeEditor_GetNodeZPosition(NodeId_c nodeId);
+CIMGUI_API void ax_NodeEditor_RestoreNodeState(NodeId_c nodeId);
 CIMGUI_API void ax_NodeEditor_Suspend(void);
 CIMGUI_API void ax_NodeEditor_Resume(void);
 CIMGUI_API bool ax_NodeEditor_IsSuspended(void);
 CIMGUI_API bool ax_NodeEditor_IsActive(void);
 CIMGUI_API bool ax_NodeEditor_HasSelectionChanged(void);
 CIMGUI_API int ax_NodeEditor_GetSelectedObjectCount(void);
-CIMGUI_API int ax_NodeEditor_GetSelectedNodes(NodeId* nodes,int size);
-CIMGUI_API int ax_NodeEditor_GetSelectedLinks(LinkId* links,int size);
-CIMGUI_API bool ax_NodeEditor_IsNodeSelected(NodeId* nodeId);
-CIMGUI_API bool ax_NodeEditor_IsLinkSelected(LinkId* linkId);
+CIMGUI_API int ax_NodeEditor_GetSelectedNodes(NodeId_c* nodes,int size);
+CIMGUI_API int ax_NodeEditor_GetSelectedLinks(LinkId_c* links,int size);
+CIMGUI_API bool ax_NodeEditor_IsNodeSelected(NodeId_c nodeId);
+CIMGUI_API bool ax_NodeEditor_IsLinkSelected(LinkId_c linkId);
 CIMGUI_API void ax_NodeEditor_ClearSelection(void);
-CIMGUI_API void ax_NodeEditor_SelectNode(NodeId* nodeId,bool append);
-CIMGUI_API void ax_NodeEditor_SelectLink(LinkId* linkId,bool append);
-CIMGUI_API void ax_NodeEditor_DeselectNode(NodeId* nodeId);
-CIMGUI_API void ax_NodeEditor_DeselectLink(LinkId* linkId);
-CIMGUI_API bool ax_NodeEditor_DeleteNode(NodeId* nodeId);
-CIMGUI_API bool ax_NodeEditor_DeleteLink(LinkId* linkId);
-CIMGUI_API bool ax_NodeEditor_HasAnyLinks_NodeId(NodeId* nodeId);
-CIMGUI_API bool ax_NodeEditor_HasAnyLinks_PinId(PinId* pinId);
-CIMGUI_API int ax_NodeEditor_BreakLinks_NodeId(NodeId* nodeId);
-CIMGUI_API int ax_NodeEditor_BreakLinks_PinId(PinId* pinId);
+CIMGUI_API void ax_NodeEditor_SelectNode(NodeId_c nodeId,bool append);
+CIMGUI_API void ax_NodeEditor_SelectLink(LinkId_c linkId,bool append);
+CIMGUI_API void ax_NodeEditor_DeselectNode(NodeId_c nodeId);
+CIMGUI_API void ax_NodeEditor_DeselectLink(LinkId_c linkId);
+CIMGUI_API bool ax_NodeEditor_DeleteNode(NodeId_c nodeId);
+CIMGUI_API bool ax_NodeEditor_DeleteLink(LinkId_c linkId);
+CIMGUI_API bool ax_NodeEditor_HasAnyLinks_NodeId(NodeId_c nodeId);
+CIMGUI_API bool ax_NodeEditor_HasAnyLinks_PinId(PinId_c pinId);
+CIMGUI_API int ax_NodeEditor_BreakLinks_NodeId(NodeId_c nodeId);
+CIMGUI_API int ax_NodeEditor_BreakLinks_PinId(PinId_c pinId);
 CIMGUI_API void ax_NodeEditor_NavigateToContent(float duration);
 CIMGUI_API void ax_NodeEditor_NavigateToSelection(bool zoomIn,float duration);
-CIMGUI_API bool ax_NodeEditor_ShowNodeContextMenu(NodeId* nodeId);
-CIMGUI_API bool ax_NodeEditor_ShowPinContextMenu(PinId* pinId);
-CIMGUI_API bool ax_NodeEditor_ShowLinkContextMenu(LinkId* linkId);
+CIMGUI_API bool ax_NodeEditor_ShowNodeContextMenu(NodeId_c* nodeId);
+CIMGUI_API bool ax_NodeEditor_ShowPinContextMenu(PinId_c* pinId);
+CIMGUI_API bool ax_NodeEditor_ShowLinkContextMenu(LinkId_c* linkId);
 CIMGUI_API bool ax_NodeEditor_ShowBackgroundContextMenu(void);
 CIMGUI_API void ax_NodeEditor_EnableShortcuts(bool enable);
 CIMGUI_API bool ax_NodeEditor_AreShortcutsEnabled(void);
@@ -279,42 +294,38 @@ CIMGUI_API bool ax_NodeEditor_AcceptPaste(void);
 CIMGUI_API bool ax_NodeEditor_AcceptDuplicate(void);
 CIMGUI_API bool ax_NodeEditor_AcceptCreateNode(void);
 CIMGUI_API int ax_NodeEditor_GetActionContextSize(void);
-CIMGUI_API int ax_NodeEditor_GetActionContextNodes(NodeId* nodes,int size);
-CIMGUI_API int ax_NodeEditor_GetActionContextLinks(LinkId* links,int size);
+CIMGUI_API int ax_NodeEditor_GetActionContextNodes(NodeId_c* nodes,int size);
+CIMGUI_API int ax_NodeEditor_GetActionContextLinks(LinkId_c* links,int size);
 CIMGUI_API void ax_NodeEditor_EndShortcut(void);
 CIMGUI_API float ax_NodeEditor_GetCurrentZoom(void);
-CIMGUI_API NodeId* ax_NodeEditor_GetHoveredNode(void);
-CIMGUI_API PinId* ax_NodeEditor_GetHoveredPin(void);
-CIMGUI_API LinkId* ax_NodeEditor_GetHoveredLink(void);
-CIMGUI_API NodeId* ax_NodeEditor_GetDoubleClickedNode(void);
-CIMGUI_API PinId* ax_NodeEditor_GetDoubleClickedPin(void);
-CIMGUI_API LinkId* ax_NodeEditor_GetDoubleClickedLink(void);
+CIMGUI_API NodeId_c ax_NodeEditor_GetHoveredNode(void);
+CIMGUI_API PinId_c ax_NodeEditor_GetHoveredPin(void);
+CIMGUI_API LinkId_c ax_NodeEditor_GetHoveredLink(void);
+CIMGUI_API NodeId_c ax_NodeEditor_GetDoubleClickedNode(void);
+CIMGUI_API PinId_c ax_NodeEditor_GetDoubleClickedPin(void);
+CIMGUI_API LinkId_c ax_NodeEditor_GetDoubleClickedLink(void);
 CIMGUI_API bool ax_NodeEditor_IsBackgroundClicked(void);
 CIMGUI_API bool ax_NodeEditor_IsBackgroundDoubleClicked(void);
 CIMGUI_API ImGuiMouseButton ax_NodeEditor_GetBackgroundClickButtonIndex(void);
 CIMGUI_API ImGuiMouseButton ax_NodeEditor_GetBackgroundDoubleClickButtonIndex(void);
-CIMGUI_API bool ax_NodeEditor_GetLinkPins(LinkId* linkId,PinId* startPinId,PinId* endPinId);
-CIMGUI_API bool ax_NodeEditor_PinHadAnyLinks(PinId* pinId);
+CIMGUI_API bool ax_NodeEditor_GetLinkPins(LinkId_c linkId,PinId_c* startPinId,PinId_c* endPinId);
+CIMGUI_API bool ax_NodeEditor_PinHadAnyLinks(PinId_c pinId);
 CIMGUI_API ImVec2_c ax_NodeEditor_GetScreenSize(void);
 CIMGUI_API ImVec2_c ax_NodeEditor_ScreenToCanvas(const ImVec2_c pos);
 CIMGUI_API ImVec2_c ax_NodeEditor_CanvasToScreen(const ImVec2_c pos);
 CIMGUI_API int ax_NodeEditor_GetNodeCount(void);
-CIMGUI_API int ax_NodeEditor_GetOrderedNodeIds(NodeId* nodes,int size);
+CIMGUI_API int ax_NodeEditor_GetOrderedNodeIds(NodeId_c* nodes,int size);
 
 
 ///manuals
-CIMGUI_API NodeId* ax_NodeEditor_NodeId(uintptr_t val);
-CIMGUI_API void NodeId_destroy(NodeId* self);
-CIMGUI_API PinId* ax_NodeEditor_PinId(uintptr_t val);
-CIMGUI_API void PinId_destroy(PinId* self);
-CIMGUI_API LinkId* ax_NodeEditor_LinkId(uintptr_t val);
-CIMGUI_API void LinkId_destroy(LinkId* self);
-CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId* self);
-CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId* self);
-CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId* self);
+CIMGUI_API NodeId_c ax_NodeEditor_NodeId(uintptr_t val);
+CIMGUI_API PinId_c ax_NodeEditor_PinId(uintptr_t val);
+CIMGUI_API LinkId_c ax_NodeEditor_LinkId(uintptr_t val);
+CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId_c self);
+CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId_c self);
+CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId_c self);
 
 #endif //CIMMODES_EDITOR_INCLUDED
-
 
 
 
