@@ -19,6 +19,69 @@
       "stname": "Config"
     }
   ],
+  "LinkId_destroy": [
+    {
+      "args": "(LinkId* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "LinkId*"
+        }
+      ],
+      "argsoriginal": "(LinkId* self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "LinkId_destroy",
+      "defaults": {},
+      "funcname": "LinkId_destroy",
+      "ov_cimguiname": "LinkId_destroy",
+      "ret": "void",
+      "signature": "(LinkId*)",
+      "stname": "LinkId"
+    }
+  ],
+  "NodeId_destroy": [
+    {
+      "args": "(NodeId* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "NodeId*"
+        }
+      ],
+      "argsoriginal": "(NodeId* self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "NodeId_destroy",
+      "defaults": {},
+      "funcname": "NodeId_destroy",
+      "ov_cimguiname": "NodeId_destroy",
+      "ret": "void",
+      "signature": "(NodeId*)",
+      "stname": "NodeId"
+    }
+  ],
+  "PinId_destroy": [
+    {
+      "args": "(PinId* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "PinId*"
+        }
+      ],
+      "argsoriginal": "(PinId* self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "PinId_destroy",
+      "defaults": {},
+      "funcname": "PinId_destroy",
+      "ov_cimguiname": "PinId_destroy",
+      "ret": "void",
+      "signature": "(PinId*)",
+      "stname": "PinId"
+    }
+  ],
   "SafePointerType_destroy": [
     {
       "args": "(SafePointerType* self)",
@@ -1853,6 +1916,49 @@
       "stname": ""
     }
   ],
+  "ax_NodeEditor_LinkId": [
+    {
+      "args": "(uintptr_t val)",
+      "argsT": [
+        {
+          "name": "val",
+          "type": "uintptr_t"
+        }
+      ],
+      "argsoriginal": "(uintptr_t val)",
+      "call_args": "(val)",
+      "call_args_old": "(val)",
+      "cimguiname": "ax_NodeEditor_LinkId",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "ax_NodeEditor_LinkId",
+      "ov_cimguiname": "ax_NodeEditor_LinkId",
+      "ret": "LinkId*",
+      "signature": "(uintptr_t)",
+      "stname": "LinkId"
+    }
+  ],
+  "ax_NodeEditor_LinkId_value": [
+    {
+      "args": "(LinkId* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "LinkId*"
+        }
+      ],
+      "argsoriginal": "(LinkId* self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "ax_NodeEditor_LinkId_value",
+      "defaults": {},
+      "funcname": "ax_NodeEditor_LinkId_value",
+      "ov_cimguiname": "ax_NodeEditor_LinkId_value",
+      "ret": "uintptr_t",
+      "signature": "(LinkId*)",
+      "stname": "LinkId"
+    }
+  ],
   "ax_NodeEditor_NavigateToContent": [
     {
       "args": "(float duration)",
@@ -1908,6 +2014,49 @@
       "stname": ""
     }
   ],
+  "ax_NodeEditor_NodeId": [
+    {
+      "args": "(uintptr_t val)",
+      "argsT": [
+        {
+          "name": "val",
+          "type": "uintptr_t"
+        }
+      ],
+      "argsoriginal": "(uintptr_t val)",
+      "call_args": "(val)",
+      "call_args_old": "(val)",
+      "cimguiname": "ax_NodeEditor_NodeId",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "ax_NodeEditor_NodeId",
+      "ov_cimguiname": "ax_NodeEditor_NodeId",
+      "ret": "NodeId*",
+      "signature": "(uintptr_t)",
+      "stname": "NodeId"
+    }
+  ],
+  "ax_NodeEditor_NodeId_value": [
+    {
+      "args": "(NodeId* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "NodeId*"
+        }
+      ],
+      "argsoriginal": "(NodeId* self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "ax_NodeEditor_NodeId_value",
+      "defaults": {},
+      "funcname": "ax_NodeEditor_NodeId_value",
+      "ov_cimguiname": "ax_NodeEditor_NodeId_value",
+      "ret": "uintptr_t",
+      "signature": "(NodeId*)",
+      "stname": "NodeId"
+    }
+  ],
   "ax_NodeEditor_PinHadAnyLinks": [
     {
       "args": "(PinId* pinId)",
@@ -1929,6 +2078,49 @@
       "ret": "bool",
       "signature": "(PinId)",
       "stname": ""
+    }
+  ],
+  "ax_NodeEditor_PinId": [
+    {
+      "args": "(uintptr_t val)",
+      "argsT": [
+        {
+          "name": "val",
+          "type": "uintptr_t"
+        }
+      ],
+      "argsoriginal": "(uintptr_t val)",
+      "call_args": "(val)",
+      "call_args_old": "(val)",
+      "cimguiname": "ax_NodeEditor_PinId",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "ax_NodeEditor_PinId",
+      "ov_cimguiname": "ax_NodeEditor_PinId",
+      "ret": "PinId*",
+      "signature": "(uintptr_t)",
+      "stname": "PinId"
+    }
+  ],
+  "ax_NodeEditor_PinId_value": [
+    {
+      "args": "(PinId* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "PinId*"
+        }
+      ],
+      "argsoriginal": "(PinId* self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "ax_NodeEditor_PinId_value",
+      "defaults": {},
+      "funcname": "ax_NodeEditor_PinId_value",
+      "ov_cimguiname": "ax_NodeEditor_PinId_value",
+      "ret": "uintptr_t",
+      "signature": "(PinId*)",
+      "stname": "PinId"
     }
   ],
   "ax_NodeEditor_PinPivotAlignment": [

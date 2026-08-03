@@ -519,7 +519,7 @@ CIMGUI_API NodeId* ax_NodeEditor_NodeId(uintptr_t val)
 {
 	return IM_NEW(NodeId)(val);
 }
-CIMGUI_API void ax_NodeEditor_NodeId_destroy(NodeId* self)
+CIMGUI_API void NodeId_destroy(NodeId* self)
 {
 	return IM_DELETE(self);
 }
@@ -527,7 +527,7 @@ CIMGUI_API PinId* ax_NodeEditor_PinId(uintptr_t val)
 {
 	return IM_NEW(PinId)(val);
 }
-CIMGUI_API void ax_NodeEditor_PinId_destroy(PinId* self)
+CIMGUI_API void PinId_destroy(PinId* self)
 {
 	return IM_DELETE(self);
 }
@@ -535,7 +535,7 @@ CIMGUI_API LinkId* ax_NodeEditor_LinkId(uintptr_t val)
 {
 	return IM_NEW(LinkId)(val);
 }
-CIMGUI_API void ax_NodeEditor_LinkId_destroy(LinkId* self)
+CIMGUI_API void LinkId_destroy(LinkId* self)
 {
 	return IM_DELETE(self);
 }

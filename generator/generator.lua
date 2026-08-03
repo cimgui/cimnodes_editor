@@ -13,15 +13,15 @@ local COMPILER, CPRE, INTERNAL_GENERATION, COMMENTS_GENERATION = cpp2ffi.GetScri
 --this table has the functions to be skipped in generation
 --------------------------------------------------------------------------
 local cimgui_manuals = {
-ax_NodeEditor_NodeId=true,
-ax_NodeEditor_NodeId_destroy=true,
-ax_NodeEditor_PinId=true,
-ax_NodeEditor_PinId_destroy=true,
-ax_NodeEditor_LinkId=true,
-ax_NodeEditor_LinkId_destroy=true,
-ax_NodeEditor_NodeId_value=true,
-ax_NodeEditor_PinId_value=true,
-ax_NodeEditor_LinkId_value=true,
+ax_NodeEditor_NodeId="NodeId",
+NodeId_destroy="NodeId",
+ax_NodeEditor_PinId="PinId",
+PinId_destroy="PinId",
+ax_NodeEditor_LinkId="LinkId",
+LinkId_destroy="LinkId",
+ax_NodeEditor_NodeId_value="NodeId",
+ax_NodeEditor_PinId_value="PinId",
+ax_NodeEditor_LinkId_value="LinkId",
 }
 
 local cimgui_skipped = {
