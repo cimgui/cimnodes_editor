@@ -6,6 +6,45 @@
 #include "cimnodes_editor.h"
 #include <cstring>
 
+// Check that the layout of the C POD structs match their C++
+// counterparts. Necessary for array arguments to work.
+static_assert(sizeof(NodeId_c) == sizeof(ax::NodeEditor::NodeId), "NodeId_c size mismatch");
+static_assert(alignof(NodeId_c) == alignof(ax::NodeEditor::NodeId), "NodeId_c alignment mismatch");
+static_assert(sizeof(PinId_c) == sizeof(ax::NodeEditor::PinId), "PinId_c size mismatch");
+static_assert(alignof(PinId_c) == alignof(ax::NodeEditor::PinId), "PinId_c alignment mismatch");
+static_assert(sizeof(LinkId_c) == sizeof(ax::NodeEditor::LinkId), "LinkId_c size mismatch");
+static_assert(alignof(LinkId_c) == alignof(ax::NodeEditor::LinkId), "LinkId_c alignment mismatch");
+
+static inline ax::NodeEditor::NodeId ConvertToCPP_NodeId(const NodeId_c& src)
+{
+    return ax::NodeEditor::NodeId(src.value);
+}
+static inline NodeId_c ConvertFromCPP_NodeId(const ax::NodeEditor::NodeId& src)
+{
+    NodeId_c dest;
+    dest.value = src.Get();
+    return dest;
+}
+static inline ax::NodeEditor::PinId ConvertToCPP_PinId(const PinId_c& src)
+{
+    return ax::NodeEditor::PinId(src.value);
+}
+static inline PinId_c ConvertFromCPP_PinId(const ax::NodeEditor::PinId& src)
+{
+    PinId_c dest;
+    dest.value = src.Get();
+    return dest;
+}
+static inline ax::NodeEditor::LinkId ConvertToCPP_LinkId(const LinkId_c& src)
+{
+    return ax::NodeEditor::LinkId(src.value);
+}
+static inline LinkId_c ConvertFromCPP_LinkId(const ax::NodeEditor::LinkId& src)
+{
+    LinkId_c dest;
+    dest.value = src.Get();
+    return dest;
+}
 
 static inline ImVec2 ConvertToCPP_ImVec2(const ImVec2_c& src)
 {
@@ -106,13 +145,13 @@ CIMGUI_API void ax_NodeEditor_End()
 {
     return ax::NodeEditor::End();
 }
-CIMGUI_API void ax_NodeEditor_BeginNode(NodeId* id)
+CIMGUI_API void ax_NodeEditor_BeginNode(NodeId_c id)
 {
-    return ax::NodeEditor::BeginNode(*id);
+    return ax::NodeEditor::BeginNode(ConvertToCPP_NodeId(id));
 }
-CIMGUI_API void ax_NodeEditor_BeginPin(PinId* id,PinKind kind)
+CIMGUI_API void ax_NodeEditor_BeginPin(PinId_c id,PinKind kind)
 {
-    return ax::NodeEditor::BeginPin(*id,kind);
+    return ax::NodeEditor::BeginPin(ConvertToCPP_PinId(id),kind);
 }
 CIMGUI_API void ax_NodeEditor_PinRect(const ImVec2_c a,const ImVec2_c b)
 {
@@ -146,9 +185,9 @@ CIMGUI_API void ax_NodeEditor_EndNode()
 {
     return ax::NodeEditor::EndNode();
 }
-CIMGUI_API bool ax_NodeEditor_BeginGroupHint(NodeId* nodeId)
+CIMGUI_API bool ax_NodeEditor_BeginGroupHint(NodeId_c nodeId)
 {
-    return ax::NodeEditor::BeginGroupHint(*nodeId);
+    return ax::NodeEditor::BeginGroupHint(ConvertToCPP_NodeId(nodeId));
 }
 CIMGUI_API ImVec2_c ax_NodeEditor_GetGroupMin()
 {
@@ -170,37 +209,37 @@ CIMGUI_API void ax_NodeEditor_EndGroupHint()
 {
     return ax::NodeEditor::EndGroupHint();
 }
-CIMGUI_API ImDrawList* ax_NodeEditor_GetNodeBackgroundDrawList(NodeId* nodeId)
+CIMGUI_API ImDrawList* ax_NodeEditor_GetNodeBackgroundDrawList(NodeId_c nodeId)
 {
-    return ax::NodeEditor::GetNodeBackgroundDrawList(*nodeId);
+    return ax::NodeEditor::GetNodeBackgroundDrawList(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API bool ax_NodeEditor_Link(LinkId* id,PinId* startPinId,PinId* endPinId,const ImVec4_c color,float thickness)
+CIMGUI_API bool ax_NodeEditor_Link(LinkId_c id,PinId_c startPinId,PinId_c endPinId,const ImVec4_c color,float thickness)
 {
-    return ax::NodeEditor::Link(*id,*startPinId,*endPinId,ConvertToCPP_ImVec4(color),thickness);
+    return ax::NodeEditor::Link(ConvertToCPP_LinkId(id),ConvertToCPP_PinId(startPinId),ConvertToCPP_PinId(endPinId),ConvertToCPP_ImVec4(color),thickness);
 }
-CIMGUI_API void ax_NodeEditor_Flow(LinkId* linkId,FlowDirection direction)
+CIMGUI_API void ax_NodeEditor_Flow(LinkId_c linkId,FlowDirection direction)
 {
-    return ax::NodeEditor::Flow(*linkId,direction);
+    return ax::NodeEditor::Flow(ConvertToCPP_LinkId(linkId),direction);
 }
 CIMGUI_API bool ax_NodeEditor_BeginCreate(const ImVec4_c color,float thickness)
 {
     return ax::NodeEditor::BeginCreate(ConvertToCPP_ImVec4(color),thickness);
 }
-CIMGUI_API bool ax_NodeEditor_QueryNewLink_Nil(PinId* startId,PinId* endId)
+CIMGUI_API bool ax_NodeEditor_QueryNewLink_Nil(PinId_c* startId,PinId_c* endId)
 {
-    return ax::NodeEditor::QueryNewLink(startId,endId);
+    return ax::NodeEditor::QueryNewLink(reinterpret_cast<ax::NodeEditor::PinId*>(startId),reinterpret_cast<ax::NodeEditor::PinId*>(endId));
 }
-CIMGUI_API bool ax_NodeEditor_QueryNewLink_Vec4(PinId* startId,PinId* endId,const ImVec4_c color,float thickness)
+CIMGUI_API bool ax_NodeEditor_QueryNewLink_Vec4(PinId_c* startId,PinId_c* endId,const ImVec4_c color,float thickness)
 {
-    return ax::NodeEditor::QueryNewLink(startId,endId,ConvertToCPP_ImVec4(color),thickness);
+    return ax::NodeEditor::QueryNewLink(reinterpret_cast<ax::NodeEditor::PinId*>(startId),reinterpret_cast<ax::NodeEditor::PinId*>(endId),ConvertToCPP_ImVec4(color),thickness);
 }
-CIMGUI_API bool ax_NodeEditor_QueryNewNode_Nil(PinId* pinId)
+CIMGUI_API bool ax_NodeEditor_QueryNewNode_Nil(PinId_c* pinId)
 {
-    return ax::NodeEditor::QueryNewNode(pinId);
+    return ax::NodeEditor::QueryNewNode(reinterpret_cast<ax::NodeEditor::PinId*>(pinId));
 }
-CIMGUI_API bool ax_NodeEditor_QueryNewNode_Vec4(PinId* pinId,const ImVec4_c color,float thickness)
+CIMGUI_API bool ax_NodeEditor_QueryNewNode_Vec4(PinId_c* pinId,const ImVec4_c color,float thickness)
 {
-    return ax::NodeEditor::QueryNewNode(pinId,ConvertToCPP_ImVec4(color),thickness);
+    return ax::NodeEditor::QueryNewNode(reinterpret_cast<ax::NodeEditor::PinId*>(pinId),ConvertToCPP_ImVec4(color),thickness);
 }
 CIMGUI_API bool ax_NodeEditor_AcceptNewItem_Nil()
 {
@@ -226,13 +265,13 @@ CIMGUI_API bool ax_NodeEditor_BeginDelete()
 {
     return ax::NodeEditor::BeginDelete();
 }
-CIMGUI_API bool ax_NodeEditor_QueryDeletedLink(LinkId* linkId,PinId* startId,PinId* endId)
+CIMGUI_API bool ax_NodeEditor_QueryDeletedLink(LinkId_c* linkId,PinId_c* startId,PinId_c* endId)
 {
-    return ax::NodeEditor::QueryDeletedLink(linkId,startId,endId);
+    return ax::NodeEditor::QueryDeletedLink(reinterpret_cast<ax::NodeEditor::LinkId*>(linkId),reinterpret_cast<ax::NodeEditor::PinId*>(startId),reinterpret_cast<ax::NodeEditor::PinId*>(endId));
 }
-CIMGUI_API bool ax_NodeEditor_QueryDeletedNode(NodeId* nodeId)
+CIMGUI_API bool ax_NodeEditor_QueryDeletedNode(NodeId_c* nodeId)
 {
-    return ax::NodeEditor::QueryDeletedNode(nodeId);
+    return ax::NodeEditor::QueryDeletedNode(reinterpret_cast<ax::NodeEditor::NodeId*>(nodeId));
 }
 CIMGUI_API bool ax_NodeEditor_AcceptDeletedItem(bool deleteDependencies)
 {
@@ -246,37 +285,37 @@ CIMGUI_API void ax_NodeEditor_EndDelete()
 {
     return ax::NodeEditor::EndDelete();
 }
-CIMGUI_API void ax_NodeEditor_SetNodePosition(NodeId* nodeId,const ImVec2_c editorPosition)
+CIMGUI_API void ax_NodeEditor_SetNodePosition(NodeId_c nodeId,const ImVec2_c editorPosition)
 {
-    return ax::NodeEditor::SetNodePosition(*nodeId,ConvertToCPP_ImVec2(editorPosition));
+    return ax::NodeEditor::SetNodePosition(ConvertToCPP_NodeId(nodeId),ConvertToCPP_ImVec2(editorPosition));
 }
-CIMGUI_API void ax_NodeEditor_SetGroupSize(NodeId* nodeId,const ImVec2_c size)
+CIMGUI_API void ax_NodeEditor_SetGroupSize(NodeId_c nodeId,const ImVec2_c size)
 {
-    return ax::NodeEditor::SetGroupSize(*nodeId,ConvertToCPP_ImVec2(size));
+    return ax::NodeEditor::SetGroupSize(ConvertToCPP_NodeId(nodeId),ConvertToCPP_ImVec2(size));
 }
-CIMGUI_API ImVec2_c ax_NodeEditor_GetNodePosition(NodeId* nodeId)
+CIMGUI_API ImVec2_c ax_NodeEditor_GetNodePosition(NodeId_c nodeId)
 {
-    return ConvertFromCPP_ImVec2(ax::NodeEditor::GetNodePosition(*nodeId));
+    return ConvertFromCPP_ImVec2(ax::NodeEditor::GetNodePosition(ConvertToCPP_NodeId(nodeId)));
 }
-CIMGUI_API ImVec2_c ax_NodeEditor_GetNodeSize(NodeId* nodeId)
+CIMGUI_API ImVec2_c ax_NodeEditor_GetNodeSize(NodeId_c nodeId)
 {
-    return ConvertFromCPP_ImVec2(ax::NodeEditor::GetNodeSize(*nodeId));
+    return ConvertFromCPP_ImVec2(ax::NodeEditor::GetNodeSize(ConvertToCPP_NodeId(nodeId)));
 }
-CIMGUI_API void ax_NodeEditor_CenterNodeOnScreen(NodeId* nodeId)
+CIMGUI_API void ax_NodeEditor_CenterNodeOnScreen(NodeId_c nodeId)
 {
-    return ax::NodeEditor::CenterNodeOnScreen(*nodeId);
+    return ax::NodeEditor::CenterNodeOnScreen(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API void ax_NodeEditor_SetNodeZPosition(NodeId* nodeId,float z)
+CIMGUI_API void ax_NodeEditor_SetNodeZPosition(NodeId_c nodeId,float z)
 {
-    return ax::NodeEditor::SetNodeZPosition(*nodeId,z);
+    return ax::NodeEditor::SetNodeZPosition(ConvertToCPP_NodeId(nodeId),z);
 }
-CIMGUI_API float ax_NodeEditor_GetNodeZPosition(NodeId* nodeId)
+CIMGUI_API float ax_NodeEditor_GetNodeZPosition(NodeId_c nodeId)
 {
-    return ax::NodeEditor::GetNodeZPosition(*nodeId);
+    return ax::NodeEditor::GetNodeZPosition(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API void ax_NodeEditor_RestoreNodeState(NodeId* nodeId)
+CIMGUI_API void ax_NodeEditor_RestoreNodeState(NodeId_c nodeId)
 {
-    return ax::NodeEditor::RestoreNodeState(*nodeId);
+    return ax::NodeEditor::RestoreNodeState(ConvertToCPP_NodeId(nodeId));
 }
 CIMGUI_API void ax_NodeEditor_Suspend()
 {
@@ -302,65 +341,65 @@ CIMGUI_API int ax_NodeEditor_GetSelectedObjectCount()
 {
     return ax::NodeEditor::GetSelectedObjectCount();
 }
-CIMGUI_API int ax_NodeEditor_GetSelectedNodes(NodeId* nodes,int size)
+CIMGUI_API int ax_NodeEditor_GetSelectedNodes(NodeId_c* nodes,int size)
 {
-    return ax::NodeEditor::GetSelectedNodes(nodes,size);
+    return ax::NodeEditor::GetSelectedNodes(reinterpret_cast<ax::NodeEditor::NodeId*>(nodes),size);
 }
-CIMGUI_API int ax_NodeEditor_GetSelectedLinks(LinkId* links,int size)
+CIMGUI_API int ax_NodeEditor_GetSelectedLinks(LinkId_c* links,int size)
 {
-    return ax::NodeEditor::GetSelectedLinks(links,size);
+    return ax::NodeEditor::GetSelectedLinks(reinterpret_cast<ax::NodeEditor::LinkId*>(links),size);
 }
-CIMGUI_API bool ax_NodeEditor_IsNodeSelected(NodeId* nodeId)
+CIMGUI_API bool ax_NodeEditor_IsNodeSelected(NodeId_c nodeId)
 {
-    return ax::NodeEditor::IsNodeSelected(*nodeId);
+    return ax::NodeEditor::IsNodeSelected(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API bool ax_NodeEditor_IsLinkSelected(LinkId* linkId)
+CIMGUI_API bool ax_NodeEditor_IsLinkSelected(LinkId_c linkId)
 {
-    return ax::NodeEditor::IsLinkSelected(*linkId);
+    return ax::NodeEditor::IsLinkSelected(ConvertToCPP_LinkId(linkId));
 }
 CIMGUI_API void ax_NodeEditor_ClearSelection()
 {
     return ax::NodeEditor::ClearSelection();
 }
-CIMGUI_API void ax_NodeEditor_SelectNode(NodeId* nodeId,bool append)
+CIMGUI_API void ax_NodeEditor_SelectNode(NodeId_c nodeId,bool append)
 {
-    return ax::NodeEditor::SelectNode(*nodeId,append);
+    return ax::NodeEditor::SelectNode(ConvertToCPP_NodeId(nodeId),append);
 }
-CIMGUI_API void ax_NodeEditor_SelectLink(LinkId* linkId,bool append)
+CIMGUI_API void ax_NodeEditor_SelectLink(LinkId_c linkId,bool append)
 {
-    return ax::NodeEditor::SelectLink(*linkId,append);
+    return ax::NodeEditor::SelectLink(ConvertToCPP_LinkId(linkId),append);
 }
-CIMGUI_API void ax_NodeEditor_DeselectNode(NodeId* nodeId)
+CIMGUI_API void ax_NodeEditor_DeselectNode(NodeId_c nodeId)
 {
-    return ax::NodeEditor::DeselectNode(*nodeId);
+    return ax::NodeEditor::DeselectNode(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API void ax_NodeEditor_DeselectLink(LinkId* linkId)
+CIMGUI_API void ax_NodeEditor_DeselectLink(LinkId_c linkId)
 {
-    return ax::NodeEditor::DeselectLink(*linkId);
+    return ax::NodeEditor::DeselectLink(ConvertToCPP_LinkId(linkId));
 }
-CIMGUI_API bool ax_NodeEditor_DeleteNode(NodeId* nodeId)
+CIMGUI_API bool ax_NodeEditor_DeleteNode(NodeId_c nodeId)
 {
-    return ax::NodeEditor::DeleteNode(*nodeId);
+    return ax::NodeEditor::DeleteNode(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API bool ax_NodeEditor_DeleteLink(LinkId* linkId)
+CIMGUI_API bool ax_NodeEditor_DeleteLink(LinkId_c linkId)
 {
-    return ax::NodeEditor::DeleteLink(*linkId);
+    return ax::NodeEditor::DeleteLink(ConvertToCPP_LinkId(linkId));
 }
-CIMGUI_API bool ax_NodeEditor_HasAnyLinks_NodeId(NodeId* nodeId)
+CIMGUI_API bool ax_NodeEditor_HasAnyLinks_NodeId(NodeId_c nodeId)
 {
-    return ax::NodeEditor::HasAnyLinks(*nodeId);
+    return ax::NodeEditor::HasAnyLinks(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API bool ax_NodeEditor_HasAnyLinks_PinId(PinId* pinId)
+CIMGUI_API bool ax_NodeEditor_HasAnyLinks_PinId(PinId_c pinId)
 {
-    return ax::NodeEditor::HasAnyLinks(*pinId);
+    return ax::NodeEditor::HasAnyLinks(ConvertToCPP_PinId(pinId));
 }
-CIMGUI_API int ax_NodeEditor_BreakLinks_NodeId(NodeId* nodeId)
+CIMGUI_API int ax_NodeEditor_BreakLinks_NodeId(NodeId_c nodeId)
 {
-    return ax::NodeEditor::BreakLinks(*nodeId);
+    return ax::NodeEditor::BreakLinks(ConvertToCPP_NodeId(nodeId));
 }
-CIMGUI_API int ax_NodeEditor_BreakLinks_PinId(PinId* pinId)
+CIMGUI_API int ax_NodeEditor_BreakLinks_PinId(PinId_c pinId)
 {
-    return ax::NodeEditor::BreakLinks(*pinId);
+    return ax::NodeEditor::BreakLinks(ConvertToCPP_PinId(pinId));
 }
 CIMGUI_API void ax_NodeEditor_NavigateToContent(float duration)
 {
@@ -370,17 +409,17 @@ CIMGUI_API void ax_NodeEditor_NavigateToSelection(bool zoomIn,float duration)
 {
     return ax::NodeEditor::NavigateToSelection(zoomIn,duration);
 }
-CIMGUI_API bool ax_NodeEditor_ShowNodeContextMenu(NodeId* nodeId)
+CIMGUI_API bool ax_NodeEditor_ShowNodeContextMenu(NodeId_c* nodeId)
 {
-    return ax::NodeEditor::ShowNodeContextMenu(nodeId);
+    return ax::NodeEditor::ShowNodeContextMenu(reinterpret_cast<ax::NodeEditor::NodeId*>(nodeId));
 }
-CIMGUI_API bool ax_NodeEditor_ShowPinContextMenu(PinId* pinId)
+CIMGUI_API bool ax_NodeEditor_ShowPinContextMenu(PinId_c* pinId)
 {
-    return ax::NodeEditor::ShowPinContextMenu(pinId);
+    return ax::NodeEditor::ShowPinContextMenu(reinterpret_cast<ax::NodeEditor::PinId*>(pinId));
 }
-CIMGUI_API bool ax_NodeEditor_ShowLinkContextMenu(LinkId* linkId)
+CIMGUI_API bool ax_NodeEditor_ShowLinkContextMenu(LinkId_c* linkId)
 {
-    return ax::NodeEditor::ShowLinkContextMenu(linkId);
+    return ax::NodeEditor::ShowLinkContextMenu(reinterpret_cast<ax::NodeEditor::LinkId*>(linkId));
 }
 CIMGUI_API bool ax_NodeEditor_ShowBackgroundContextMenu()
 {
@@ -422,13 +461,13 @@ CIMGUI_API int ax_NodeEditor_GetActionContextSize()
 {
     return ax::NodeEditor::GetActionContextSize();
 }
-CIMGUI_API int ax_NodeEditor_GetActionContextNodes(NodeId* nodes,int size)
+CIMGUI_API int ax_NodeEditor_GetActionContextNodes(NodeId_c* nodes,int size)
 {
-    return ax::NodeEditor::GetActionContextNodes(nodes,size);
+    return ax::NodeEditor::GetActionContextNodes(reinterpret_cast<ax::NodeEditor::NodeId*>(nodes),size);
 }
-CIMGUI_API int ax_NodeEditor_GetActionContextLinks(LinkId* links,int size)
+CIMGUI_API int ax_NodeEditor_GetActionContextLinks(LinkId_c* links,int size)
 {
-    return ax::NodeEditor::GetActionContextLinks(links,size);
+    return ax::NodeEditor::GetActionContextLinks(reinterpret_cast<ax::NodeEditor::LinkId*>(links),size);
 }
 CIMGUI_API void ax_NodeEditor_EndShortcut()
 {
@@ -438,35 +477,29 @@ CIMGUI_API float ax_NodeEditor_GetCurrentZoom()
 {
     return ax::NodeEditor::GetCurrentZoom();
 }
-CIMGUI_API NodeId* ax_NodeEditor_GetHoveredNode()
+CIMGUI_API NodeId_c ax_NodeEditor_GetHoveredNode()
 {
-    static auto opq = ax::NodeEditor::GetHoveredNode();
-    return &opq;
+    return ConvertFromCPP_NodeId(ax::NodeEditor::GetHoveredNode());
 }
-CIMGUI_API PinId* ax_NodeEditor_GetHoveredPin()
+CIMGUI_API PinId_c ax_NodeEditor_GetHoveredPin()
 {
-    static auto opq = ax::NodeEditor::GetHoveredPin();
-    return &opq;
+    return ConvertFromCPP_PinId(ax::NodeEditor::GetHoveredPin());
 }
-CIMGUI_API LinkId* ax_NodeEditor_GetHoveredLink()
+CIMGUI_API LinkId_c ax_NodeEditor_GetHoveredLink()
 {
-    static auto opq = ax::NodeEditor::GetHoveredLink();
-    return &opq;
+    return ConvertFromCPP_LinkId(ax::NodeEditor::GetHoveredLink());
 }
-CIMGUI_API NodeId* ax_NodeEditor_GetDoubleClickedNode()
+CIMGUI_API NodeId_c ax_NodeEditor_GetDoubleClickedNode()
 {
-    static auto opq = ax::NodeEditor::GetDoubleClickedNode();
-    return &opq;
+    return ConvertFromCPP_NodeId(ax::NodeEditor::GetDoubleClickedNode());
 }
-CIMGUI_API PinId* ax_NodeEditor_GetDoubleClickedPin()
+CIMGUI_API PinId_c ax_NodeEditor_GetDoubleClickedPin()
 {
-    static auto opq = ax::NodeEditor::GetDoubleClickedPin();
-    return &opq;
+    return ConvertFromCPP_PinId(ax::NodeEditor::GetDoubleClickedPin());
 }
-CIMGUI_API LinkId* ax_NodeEditor_GetDoubleClickedLink()
+CIMGUI_API LinkId_c ax_NodeEditor_GetDoubleClickedLink()
 {
-    static auto opq = ax::NodeEditor::GetDoubleClickedLink();
-    return &opq;
+    return ConvertFromCPP_LinkId(ax::NodeEditor::GetDoubleClickedLink());
 }
 CIMGUI_API bool ax_NodeEditor_IsBackgroundClicked()
 {
@@ -484,13 +517,13 @@ CIMGUI_API ImGuiMouseButton ax_NodeEditor_GetBackgroundDoubleClickButtonIndex()
 {
     return ax::NodeEditor::GetBackgroundDoubleClickButtonIndex();
 }
-CIMGUI_API bool ax_NodeEditor_GetLinkPins(LinkId* linkId,PinId* startPinId,PinId* endPinId)
+CIMGUI_API bool ax_NodeEditor_GetLinkPins(LinkId_c linkId,PinId_c* startPinId,PinId_c* endPinId)
 {
-    return ax::NodeEditor::GetLinkPins(*linkId,startPinId,endPinId);
+    return ax::NodeEditor::GetLinkPins(ConvertToCPP_LinkId(linkId),reinterpret_cast<ax::NodeEditor::PinId*>(startPinId),reinterpret_cast<ax::NodeEditor::PinId*>(endPinId));
 }
-CIMGUI_API bool ax_NodeEditor_PinHadAnyLinks(PinId* pinId)
+CIMGUI_API bool ax_NodeEditor_PinHadAnyLinks(PinId_c pinId)
 {
-    return ax::NodeEditor::PinHadAnyLinks(*pinId);
+    return ax::NodeEditor::PinHadAnyLinks(ConvertToCPP_PinId(pinId));
 }
 CIMGUI_API ImVec2_c ax_NodeEditor_GetScreenSize()
 {
@@ -508,48 +541,42 @@ CIMGUI_API int ax_NodeEditor_GetNodeCount()
 {
     return ax::NodeEditor::GetNodeCount();
 }
-CIMGUI_API int ax_NodeEditor_GetOrderedNodeIds(NodeId* nodes,int size)
+CIMGUI_API int ax_NodeEditor_GetOrderedNodeIds(NodeId_c* nodes,int size)
 {
-    return ax::NodeEditor::GetOrderedNodeIds(nodes,size);
+    return ax::NodeEditor::GetOrderedNodeIds(reinterpret_cast<ax::NodeEditor::NodeId*>(nodes),size);
 }
 
 
 ///manuals
-CIMGUI_API NodeId* ax_NodeEditor_NodeId(uintptr_t val)
+CIMGUI_API NodeId_c ax_NodeEditor_NodeId(uintptr_t val)
 {
-	return IM_NEW(NodeId)(val);
+	NodeId_c self;
+	self.value = val;
+	return self;
 }
-CIMGUI_API void NodeId_destroy(NodeId* self)
+CIMGUI_API PinId_c ax_NodeEditor_PinId(uintptr_t val)
 {
-	return IM_DELETE(self);
+	PinId_c self;
+	self.value = val;
+	return self;
 }
-CIMGUI_API PinId* ax_NodeEditor_PinId(uintptr_t val)
+CIMGUI_API LinkId_c ax_NodeEditor_LinkId(uintptr_t val)
 {
-	return IM_NEW(PinId)(val);
+	LinkId_c self;
+	self.value = val;
+	return self;
 }
-CIMGUI_API void PinId_destroy(PinId* self)
+CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId_c self)
 {
-	return IM_DELETE(self);
+	return self.value;
 }
-CIMGUI_API LinkId* ax_NodeEditor_LinkId(uintptr_t val)
+CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId_c self)
 {
-	return IM_NEW(LinkId)(val);
+	return self.value;
 }
-CIMGUI_API void LinkId_destroy(LinkId* self)
+CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId_c self)
 {
-	return IM_DELETE(self);
-}
-CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId* self)
-{
-	return self->Get();
-}
-CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId* self)
-{
-	return self->Get();
-}
-CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId* self)
-{
-	return self->Get();
+	return self.value;
 }
 
 
