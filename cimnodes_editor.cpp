@@ -441,31 +441,37 @@ CIMGUI_API float ax_NodeEditor_GetCurrentZoom()
 CIMGUI_API NodeId* ax_NodeEditor_GetHoveredNode()
 {
     static auto opq = ax::NodeEditor::GetHoveredNode();
+    opq = ax::NodeEditor::GetHoveredNode();
     return &opq;
 }
 CIMGUI_API PinId* ax_NodeEditor_GetHoveredPin()
 {
     static auto opq = ax::NodeEditor::GetHoveredPin();
+    opq = ax::NodeEditor::GetHoveredPin();
     return &opq;
 }
 CIMGUI_API LinkId* ax_NodeEditor_GetHoveredLink()
 {
     static auto opq = ax::NodeEditor::GetHoveredLink();
+    opq = ax::NodeEditor::GetHoveredLink();
     return &opq;
 }
 CIMGUI_API NodeId* ax_NodeEditor_GetDoubleClickedNode()
 {
     static auto opq = ax::NodeEditor::GetDoubleClickedNode();
+    opq = ax::NodeEditor::GetDoubleClickedNode();
     return &opq;
 }
 CIMGUI_API PinId* ax_NodeEditor_GetDoubleClickedPin()
 {
     static auto opq = ax::NodeEditor::GetDoubleClickedPin();
+    opq = ax::NodeEditor::GetDoubleClickedPin();
     return &opq;
 }
 CIMGUI_API LinkId* ax_NodeEditor_GetDoubleClickedLink()
 {
     static auto opq = ax::NodeEditor::GetDoubleClickedLink();
+    opq = ax::NodeEditor::GetDoubleClickedLink();
     return &opq;
 }
 CIMGUI_API bool ax_NodeEditor_IsBackgroundClicked()
