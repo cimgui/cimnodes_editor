@@ -136,20 +136,27 @@ local function use_pod_ids(parser)
 			end
 
 			for _, arg in ipairs(def.argsT) do
-				local pointed_id = arg.type:match("^(%a+)%*$")
-				if pod_ids[arg.type] then
-					-- passed by value in C++: pointer that gets dereferenced -> POD by value
-					def.args = def.args:gsub("([(,])"..arg.type.."%*%s*"..arg.name.."([,)])",
-						"%1"..arg.type.."_c "..arg.name.."%2")
-					def.call_args = def.call_args:gsub("([(,])%*"..arg.name.."([,)])",
-						"%1ConvertToCPP_"..arg.type.."("..arg.name..")%2")
-				elseif pod_ids[pointed_id] then
-					-- a real pointer (array or out argument): the POD has the same
-					-- layout as the C++ id, so the buffer is cast in place
-					def.args = def.args:gsub("([(,])"..pointed_id.."%*%s*"..arg.name.."([,)])",
-						"%1"..pointed_id.."_c* "..arg.name.."%2")
-					def.call_args = def.call_args:gsub("([(,])"..arg.name.."([,)])",
-						"%1reinterpret_cast<"..namespace..pointed_id.."*>("..arg.name..")%2")
+				-- ADDnonUDT rewrote argsT to the C signature it produced, so an id
+				-- passed by value in C++ and a real id pointer both arrive here as
+				-- "NodeId*"; only argsoriginal still tells the two apart
+				local id = arg.type:match("^(%a+)%*$")
+				if pod_ids[id] then
+					local star = def.argsoriginal:match("[(,]%s*"..id.."%s*(%**)%s*"..arg.name.."%s*[,)=]")
+					if star == "" then
+						-- passed by value in C++: pointer that gets dereferenced -> POD by value
+						def.args = def.args:gsub("([(,])"..id.."%*%s*"..arg.name.."([,)])",
+							"%1"..id.."_c "..arg.name.."%2")
+						def.call_args = def.call_args:gsub("([(,])%*"..arg.name.."([,)])",
+							"%1ConvertToCPP_"..id.."("..arg.name..")%2")
+						arg.type = id
+					else
+						-- a real pointer (array or out argument): the POD has the same
+						-- layout as the C++ id, so the buffer is cast in place
+						def.args = def.args:gsub("([(,])"..id.."%*%s*"..arg.name.."([,)])",
+							"%1"..id.."_c* "..arg.name.."%2")
+						def.call_args = def.call_args:gsub("([(,])"..arg.name.."([,)])",
+							"%1reinterpret_cast<"..namespace..id.."*>("..arg.name..")%2")
+					end
 				end
 			end
 		end
