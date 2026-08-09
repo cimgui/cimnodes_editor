@@ -153,15 +153,15 @@ struct cimnodes_editor_Style
 struct EditorContext;
 struct NodeId_c
 {
-    uintptr_t value;
+    uintptr_t value_c;
 };
 struct LinkId_c
 {
-    uintptr_t value;
+    uintptr_t value_c;
 };
 struct PinId_c
 {
-    uintptr_t value;
+    uintptr_t value_c;
 };
 #else
 #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
@@ -174,15 +174,15 @@ typedef struct PinId_c PinId;
 #ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct LinkId_c LinkId_c;
 struct LinkId_c {
-    uintptr_t value;
+    uintptr_t value_c;
 };
 typedef struct NodeId_c NodeId_c;
 struct NodeId_c {
-    uintptr_t value;
+    uintptr_t value_c;
 };
 typedef struct PinId_c PinId_c;
 struct PinId_c {
-    uintptr_t value;
+    uintptr_t value_c;
 };
 #endif
 

@@ -524,19 +524,19 @@
     ],
     "LinkId": [
       {
-        "name": "value",
+        "name": "value_c",
         "type": "uintptr_t"
       }
     ],
     "NodeId": [
       {
-        "name": "value",
+        "name": "value_c",
         "type": "uintptr_t"
       }
     ],
     "PinId": [
       {
-        "name": "value",
+        "name": "value_c",
         "type": "uintptr_t"
       }
     ],

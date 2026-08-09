@@ -15,32 +15,32 @@ static_assert(alignof(LinkId_c) == alignof(ax::NodeEditor::LinkId), "LinkId_c al
 
 static inline ax::NodeEditor::NodeId ConvertToCPP_NodeId(const NodeId_c& src)
 {
-    return ax::NodeEditor::NodeId(src.value);
+    return ax::NodeEditor::NodeId(src.value_c);
 }
 static inline NodeId_c ConvertFromCPP_NodeId(const ax::NodeEditor::NodeId& src)
 {
     NodeId_c dest;
-    dest.value = src.Get();
+    dest.value_c = src.Get();
     return dest;
 }
 static inline ax::NodeEditor::PinId ConvertToCPP_PinId(const PinId_c& src)
 {
-    return ax::NodeEditor::PinId(src.value);
+    return ax::NodeEditor::PinId(src.value_c);
 }
 static inline PinId_c ConvertFromCPP_PinId(const ax::NodeEditor::PinId& src)
 {
     PinId_c dest;
-    dest.value = src.Get();
+    dest.value_c = src.Get();
     return dest;
 }
 static inline ax::NodeEditor::LinkId ConvertToCPP_LinkId(const LinkId_c& src)
 {
-    return ax::NodeEditor::LinkId(src.value);
+    return ax::NodeEditor::LinkId(src.value_c);
 }
 static inline LinkId_c ConvertFromCPP_LinkId(const ax::NodeEditor::LinkId& src)
 {
     LinkId_c dest;
-    dest.value = src.Get();
+    dest.value_c = src.Get();
     return dest;
 }
 
@@ -52,30 +52,30 @@ static inline LinkId_c ConvertFromCPP_LinkId(const ax::NodeEditor::LinkId& src)
 CIMGUI_API NodeId_c ax_NodeEditor_NodeId(uintptr_t val)
 {
 	NodeId_c self;
-	self.value = val;
+	self.value_c = val;
 	return self;
 }
 CIMGUI_API PinId_c ax_NodeEditor_PinId(uintptr_t val)
 {
 	PinId_c self;
-	self.value = val;
+	self.value_c = val;
 	return self;
 }
 CIMGUI_API LinkId_c ax_NodeEditor_LinkId(uintptr_t val)
 {
 	LinkId_c self;
-	self.value = val;
+	self.value_c = val;
 	return self;
 }
 CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId_c self)
 {
-	return self.value;
+	return self.value_c;
 }
 CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId_c self)
 {
-	return self.value;
+	return self.value_c;
 }
 CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId_c self)
 {
-	return self.value;
+	return self.value_c;
 }
