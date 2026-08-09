@@ -8,42 +8,34 @@
 #include "auto_funcs.cpp"
 
 ///manuals
-CIMGUI_API NodeId* ax_NodeEditor_NodeId(uintptr_t val)
+///manuals
+CIMGUI_API NodeId_c ax_NodeEditor_NodeId(uintptr_t val)
 {
-	return IM_NEW(NodeId)(val);
+	NodeId_c self;
+	self.value = val;
+	return self;
 }
-CIMGUI_API void NodeId_destroy(NodeId* self)
+CIMGUI_API PinId_c ax_NodeEditor_PinId(uintptr_t val)
 {
-	return IM_DELETE(self);
+	PinId_c self;
+	self.value = val;
+	return self;
 }
-CIMGUI_API PinId* ax_NodeEditor_PinId(uintptr_t val)
+CIMGUI_API LinkId_c ax_NodeEditor_LinkId(uintptr_t val)
 {
-	return IM_NEW(PinId)(val);
+	LinkId_c self;
+	self.value = val;
+	return self;
 }
-CIMGUI_API void PinId_destroy(PinId* self)
+CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId_c self)
 {
-	return IM_DELETE(self);
+	return self.value;
 }
-CIMGUI_API LinkId* ax_NodeEditor_LinkId(uintptr_t val)
+CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId_c self)
 {
-	return IM_NEW(LinkId)(val);
+	return self.value;
 }
-CIMGUI_API void LinkId_destroy(LinkId* self)
+CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId_c self)
 {
-	return IM_DELETE(self);
+	return self.value;
 }
-CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId* self)
-{
-	return self->Get();
-}
-CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId* self)
-{
-	return self->Get();
-}
-CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId* self)
-{
-	return self->Get();
-}
-
-
-

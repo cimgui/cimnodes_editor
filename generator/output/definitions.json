@@ -1859,6 +1859,49 @@
       "stname": ""
     }
   ],
+  "ax_NodeEditor_LinkId": [
+    {
+      "args": "(uintptr_t val)",
+      "argsT": [
+        {
+          "name": "val",
+          "type": "uintptr_t"
+        }
+      ],
+      "argsoriginal": "(uintptr_t val)",
+      "call_args": "(val)",
+      "call_args_old": "(val)",
+      "cimguiname": "ax_NodeEditor_LinkId",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "ax_NodeEditor_LinkId",
+      "ov_cimguiname": "ax_NodeEditor_LinkId",
+      "ret": "LinkId_c",
+      "signature": "(uintptr_t)",
+      "stname": "LinkId"
+    }
+  ],
+  "ax_NodeEditor_LinkId_value": [
+    {
+      "args": "(LinkId_c self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "LinkId_c"
+        }
+      ],
+      "argsoriginal": "(LinkId_c self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "ax_NodeEditor_LinkId_value",
+      "defaults": {},
+      "funcname": "ax_NodeEditor_LinkId_value",
+      "ov_cimguiname": "ax_NodeEditor_LinkId_value",
+      "ret": "uintptr_t",
+      "signature": "(LinkId_c)",
+      "stname": "LinkId"
+    }
+  ],
   "ax_NodeEditor_NavigateToContent": [
     {
       "args": "(float duration)",
@@ -1914,6 +1957,49 @@
       "stname": ""
     }
   ],
+  "ax_NodeEditor_NodeId": [
+    {
+      "args": "(uintptr_t val)",
+      "argsT": [
+        {
+          "name": "val",
+          "type": "uintptr_t"
+        }
+      ],
+      "argsoriginal": "(uintptr_t val)",
+      "call_args": "(val)",
+      "call_args_old": "(val)",
+      "cimguiname": "ax_NodeEditor_NodeId",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "ax_NodeEditor_NodeId",
+      "ov_cimguiname": "ax_NodeEditor_NodeId",
+      "ret": "NodeId_c",
+      "signature": "(uintptr_t)",
+      "stname": "NodeId"
+    }
+  ],
+  "ax_NodeEditor_NodeId_value": [
+    {
+      "args": "(NodeId_c self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "NodeId_c"
+        }
+      ],
+      "argsoriginal": "(NodeId_c self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "ax_NodeEditor_NodeId_value",
+      "defaults": {},
+      "funcname": "ax_NodeEditor_NodeId_value",
+      "ov_cimguiname": "ax_NodeEditor_NodeId_value",
+      "ret": "uintptr_t",
+      "signature": "(NodeId_c)",
+      "stname": "NodeId"
+    }
+  ],
   "ax_NodeEditor_PinHadAnyLinks": [
     {
       "args": "(PinId_c pinId)",
@@ -1935,6 +2021,49 @@
       "ret": "bool",
       "signature": "(PinId)",
       "stname": ""
+    }
+  ],
+  "ax_NodeEditor_PinId": [
+    {
+      "args": "(uintptr_t val)",
+      "argsT": [
+        {
+          "name": "val",
+          "type": "uintptr_t"
+        }
+      ],
+      "argsoriginal": "(uintptr_t val)",
+      "call_args": "(val)",
+      "call_args_old": "(val)",
+      "cimguiname": "ax_NodeEditor_PinId",
+      "constructor": true,
+      "defaults": {},
+      "funcname": "ax_NodeEditor_PinId",
+      "ov_cimguiname": "ax_NodeEditor_PinId",
+      "ret": "PinId_c",
+      "signature": "(uintptr_t)",
+      "stname": "PinId"
+    }
+  ],
+  "ax_NodeEditor_PinId_value": [
+    {
+      "args": "(PinId_c self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "PinId_c"
+        }
+      ],
+      "argsoriginal": "(PinId_c self)",
+      "call_args": "(self)",
+      "call_args_old": "(self)",
+      "cimguiname": "ax_NodeEditor_PinId_value",
+      "defaults": {},
+      "funcname": "ax_NodeEditor_PinId_value",
+      "ov_cimguiname": "ax_NodeEditor_PinId_value",
+      "ret": "uintptr_t",
+      "signature": "(PinId_c)",
+      "stname": "PinId"
     }
   ],
   "ax_NodeEditor_PinPivotAlignment": [
