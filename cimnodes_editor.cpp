@@ -42,43 +42,37 @@ static inline ImVec4_c ConvertFromCPP_ImVec4(const ImVec4& src)
 static inline LinkId ConvertToCPP_LinkId(const LinkId_c& src)
 {
     LinkId dest;
-    dest._Details::SafePointerType<LinkId> = src._Details::SafePointerType<LinkId>;
-    dest.SafePointerType = src.SafePointerType;
+    dest.value = src.value;
     return dest;
 }
 static inline LinkId_c ConvertFromCPP_LinkId(const LinkId& src)
 {
     LinkId_c dest;
-    dest._Details::SafePointerType<LinkId> = src._Details::SafePointerType<LinkId>;
-    dest.SafePointerType = src.SafePointerType;
+    dest.value = src.value;
     return dest;
 }
 static inline NodeId ConvertToCPP_NodeId(const NodeId_c& src)
 {
     NodeId dest;
-    dest._Details::SafePointerType<NodeId> = src._Details::SafePointerType<NodeId>;
-    dest.SafePointerType = src.SafePointerType;
+    dest.value = src.value;
     return dest;
 }
 static inline NodeId_c ConvertFromCPP_NodeId(const NodeId& src)
 {
     NodeId_c dest;
-    dest._Details::SafePointerType<NodeId> = src._Details::SafePointerType<NodeId>;
-    dest.SafePointerType = src.SafePointerType;
+    dest.value = src.value;
     return dest;
 }
 static inline PinId ConvertToCPP_PinId(const PinId_c& src)
 {
     PinId dest;
-    dest._Details::SafePointerType<PinId> = src._Details::SafePointerType<PinId>;
-    dest.SafePointerType = src.SafePointerType;
+    dest.value = src.value;
     return dest;
 }
 static inline PinId_c ConvertFromCPP_PinId(const PinId& src)
 {
     PinId_c dest;
-    dest._Details::SafePointerType<PinId> = src._Details::SafePointerType<PinId>;
-    dest.SafePointerType = src.SafePointerType;
+    dest.value = src.value;
     return dest;
 }CIMGUI_API Config* ax_NodeEditor_Config_Config_Config(void)
 {

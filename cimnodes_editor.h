@@ -6,6 +6,9 @@
 #include "cimgui.h"
 
 #ifdef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
+typedef struct LinkId_c LinkId;
+typedef struct NodeId_c NodeId;
+typedef struct PinId_c PinId;
 
 typedef struct NodeId_c NodeId_c;
 typedef struct LinkId_c LinkId_c;
@@ -147,22 +150,19 @@ struct cimnodes_editor_Style
     float SnapLinkToPinDir;
     ImVec4_c Colors[StyleColor_Count];
 };
-struct EditorContext;
-struct NodeId_c
+struct EditorContext;struct NodeId_c
 {
-    Details::SafePointerType<NodeId> _Details::SafePointerType<NodeId>;
-    using SafePointerType;
+uintptr_t value;
 };
 struct LinkId_c
 {
-    Details::SafePointerType<LinkId> _Details::SafePointerType<LinkId>;
-    using SafePointerType;
+uintptr_t value;
 };
 struct PinId_c
 {
-    Details::SafePointerType<PinId> _Details::SafePointerType<PinId>;
-    using SafePointerType;
+uintptr_t value;
 };
+
 #else
 #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 
@@ -174,18 +174,15 @@ typedef struct PinId_c PinId;
 #ifndef CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 typedef struct LinkId_c LinkId_c;
 struct LinkId_c {
-    Details::SafePointerType<LinkId> _Details::SafePointerType<LinkId>;
-    using SafePointerType;
+    uintptr_t value;
 };
 typedef struct NodeId_c NodeId_c;
 struct NodeId_c {
-    Details::SafePointerType<NodeId> _Details::SafePointerType<NodeId>;
-    using SafePointerType;
+    uintptr_t value;
 };
 typedef struct PinId_c PinId_c;
 struct PinId_c {
-    Details::SafePointerType<PinId> _Details::SafePointerType<PinId>;
-    using SafePointerType;
+    uintptr_t value;
 };
 #endif
 

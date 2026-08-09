@@ -335,9 +335,6 @@
     "CanvasSizeMode": "imgui_node_editor:58",
     "Config": "imgui_node_editor:90",
     "FlowDirection": "imgui_node_editor:52",
-    "LinkId": "imgui_node_editor:513",
-    "NodeId": "imgui_node_editor:508",
-    "PinId": "imgui_node_editor:518",
     "PinKind": "imgui_node_editor:46",
     "SaveReasonFlags": "imgui_node_editor:67",
     "StyleColor": "imgui_node_editor:138",
@@ -527,32 +524,20 @@
     ],
     "LinkId": [
       {
-        "name": "_Details::SafePointerType<LinkId>",
-        "type": "Details::SafePointerType<LinkId>"
-      },
-      {
-        "name": "SafePointerType",
-        "type": "using"
+        "name": "value",
+        "type": "uintptr_t"
       }
     ],
     "NodeId": [
       {
-        "name": "_Details::SafePointerType<NodeId>",
-        "type": "Details::SafePointerType<NodeId>"
-      },
-      {
-        "name": "SafePointerType",
-        "type": "using"
+        "name": "value",
+        "type": "uintptr_t"
       }
     ],
     "PinId": [
       {
-        "name": "_Details::SafePointerType<PinId>",
-        "type": "Details::SafePointerType<PinId>"
-      },
-      {
-        "name": "SafePointerType",
-        "type": "using"
+        "name": "value",
+        "type": "uintptr_t"
       }
     ],
     "cimnodes_editor_Style": [
