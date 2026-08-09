@@ -439,20 +439,20 @@
     "ImVec2ih": "inherited",
     "ImVec4": "inherited",
     "ImVector": "inherited",
+    "LinkId": true,
+    "NodeId": true,
+    "PinId": true,
     "SafePointerType": true,
     "SafeType": true
   },
   "nonPOD_used": {
     "ImVec2": "inherited",
-    "ImVec4": "inherited"
+    "ImVec4": "inherited",
+    "LinkId": true,
+    "NodeId": true,
+    "PinId": true
   },
-  "opaque_structs": {
-    "LinkId": "ax::NodeEditor::LinkId",
-    "NodeId": "ax::NodeEditor::NodeId",
-    "PinId": "ax::NodeEditor::PinId",
-    "SafePointerType": "ax::NodeEditor::Details::SafePointerType",
-    "SafeType": "ax::NodeEditor::Details::SafeType"
-  },
+  "opaque_structs": [],
   "structs": {
     "Config": [
       {
@@ -525,9 +525,36 @@
         "type": "float"
       }
     ],
-    "LinkId": [],
-    "NodeId": [],
-    "PinId": [],
+    "LinkId": [
+      {
+        "name": "_Details::SafePointerType<LinkId>",
+        "type": "Details::SafePointerType<LinkId>"
+      },
+      {
+        "name": "SafePointerType",
+        "type": "using"
+      }
+    ],
+    "NodeId": [
+      {
+        "name": "_Details::SafePointerType<NodeId>",
+        "type": "Details::SafePointerType<NodeId>"
+      },
+      {
+        "name": "SafePointerType",
+        "type": "using"
+      }
+    ],
+    "PinId": [
+      {
+        "name": "_Details::SafePointerType<PinId>",
+        "type": "Details::SafePointerType<PinId>"
+      },
+      {
+        "name": "SafePointerType",
+        "type": "using"
+      }
+    ],
     "cimnodes_editor_Style": [
       {
         "name": "NodePadding",

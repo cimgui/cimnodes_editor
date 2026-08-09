@@ -13,15 +13,15 @@ local COMPILER, CPRE, INTERNAL_GENERATION, COMMENTS_GENERATION = cpp2ffi.GetScri
 --this table has the functions to be skipped in generation
 --------------------------------------------------------------------------
 local cimgui_manuals = {
-ax_NodeEditor_NodeId="NodeId",
-NodeId_destroy="NodeId",
-ax_NodeEditor_PinId="PinId",
-PinId_destroy="PinId",
-ax_NodeEditor_LinkId="LinkId",
-LinkId_destroy="LinkId",
-ax_NodeEditor_NodeId_value="NodeId",
-ax_NodeEditor_PinId_value="PinId",
-ax_NodeEditor_LinkId_value="LinkId",
+-- ax_NodeEditor_NodeId="NodeId",
+-- NodeId_destroy="NodeId",
+-- ax_NodeEditor_PinId="PinId",
+-- PinId_destroy="PinId",
+-- ax_NodeEditor_LinkId="LinkId",
+-- LinkId_destroy="LinkId",
+-- ax_NodeEditor_NodeId_value="NodeId",
+-- ax_NodeEditor_PinId_value="PinId",
+-- ax_NodeEditor_LinkId_value="LinkId",
 }
 
 local cimgui_skipped = {
@@ -98,7 +98,8 @@ local function parseImGuiHeader(header, names, modulename)
 	parser.cimgui_inherited =  dofile([[../../cimgui/generator/output/structs_and_enums.lua]])
 	parser.name_conversion = {Style="cimnodes_editor_Style"}
 	parser.custom_header = custom_header
-	parser.forced_opaque = {SafeType=true}
+	--parser.forced_opaque = {SafeType=true}
+	parser.forced_nonPOD = {NodeId=true, PinId=true, LinkId= true}
 	local include_cmd = COMPILER=="cl" and [[ /I ]] or [[ -I ]]
 	local extra_includes = include_cmd.." ../../cimgui "
 	--..include_cmd.." ../ImGuiColorTextEdit/vendor/regex/include "
