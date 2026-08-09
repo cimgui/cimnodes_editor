@@ -150,19 +150,19 @@ struct cimnodes_editor_Style
     float SnapLinkToPinDir;
     ImVec4_c Colors[StyleColor_Count];
 };
-struct EditorContext;struct NodeId_c
+struct EditorContext;
+struct NodeId_c
 {
-uintptr_t value;
+    uintptr_t value;
 };
 struct LinkId_c
 {
-uintptr_t value;
+    uintptr_t value;
 };
 struct PinId_c
 {
-uintptr_t value;
+    uintptr_t value;
 };
-
 #else
 #endif // CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 
@@ -201,7 +201,6 @@ typedef ax::NodeEditor::SaveReasonFlags SaveReasonFlags;
 typedef ax::NodeEditor::StyleColor StyleColor;
 typedef ax::NodeEditor::StyleVar StyleVar;
 typedef ImVector<float> ImVector_float;
-typedef SafeType<uintptr_t, Tag> SafeType_uintptr_t__Tag;
 #endif //CIMGUI_DEFINE_ENUMS_AND_STRUCTS
 CIMGUI_API Config* ax_NodeEditor_Config_Config_Config(void);
 CIMGUI_API void Config_destroy(Config* self);

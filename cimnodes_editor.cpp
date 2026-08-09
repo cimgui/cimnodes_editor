@@ -6,6 +6,46 @@
 #include "cimnodes_editor.h"
 #include <cstring>
 
+// Check that the layout of the C POD structs match their C++
+// counterparts. Necessary for array arguments to work.
+static_assert(sizeof(NodeId_c) == sizeof(ax::NodeEditor::NodeId), "NodeId_c size mismatch");
+static_assert(alignof(NodeId_c) == alignof(ax::NodeEditor::NodeId), "NodeId_c alignment mismatch");
+static_assert(sizeof(PinId_c) == sizeof(ax::NodeEditor::PinId), "PinId_c size mismatch");
+static_assert(alignof(PinId_c) == alignof(ax::NodeEditor::PinId), "PinId_c alignment mismatch");
+static_assert(sizeof(LinkId_c) == sizeof(ax::NodeEditor::LinkId), "LinkId_c size mismatch");
+static_assert(alignof(LinkId_c) == alignof(ax::NodeEditor::LinkId), "LinkId_c alignment mismatch");
+
+static inline ax::NodeEditor::NodeId ConvertToCPP_NodeId(const NodeId_c& src)
+{
+    return ax::NodeEditor::NodeId(src.value);
+}
+static inline NodeId_c ConvertFromCPP_NodeId(const ax::NodeEditor::NodeId& src)
+{
+    NodeId_c dest;
+    dest.value = src.Get();
+    return dest;
+}
+static inline ax::NodeEditor::PinId ConvertToCPP_PinId(const PinId_c& src)
+{
+    return ax::NodeEditor::PinId(src.value);
+}
+static inline PinId_c ConvertFromCPP_PinId(const ax::NodeEditor::PinId& src)
+{
+    PinId_c dest;
+    dest.value = src.Get();
+    return dest;
+}
+static inline ax::NodeEditor::LinkId ConvertToCPP_LinkId(const LinkId_c& src)
+{
+    return ax::NodeEditor::LinkId(src.value);
+}
+static inline LinkId_c ConvertFromCPP_LinkId(const ax::NodeEditor::LinkId& src)
+{
+    LinkId_c dest;
+    dest.value = src.Get();
+    return dest;
+}
+
 
 static inline ImVec2 ConvertToCPP_ImVec2(const ImVec2_c& src)
 {
@@ -37,42 +77,6 @@ static inline ImVec4_c ConvertFromCPP_ImVec4(const ImVec4& src)
     dest.y = src.y;
     dest.z = src.z;
     dest.w = src.w;
-    return dest;
-}
-static inline LinkId ConvertToCPP_LinkId(const LinkId_c& src)
-{
-    LinkId dest;
-    dest.value = src.value;
-    return dest;
-}
-static inline LinkId_c ConvertFromCPP_LinkId(const LinkId& src)
-{
-    LinkId_c dest;
-    dest.value = src.value;
-    return dest;
-}
-static inline NodeId ConvertToCPP_NodeId(const NodeId_c& src)
-{
-    NodeId dest;
-    dest.value = src.value;
-    return dest;
-}
-static inline NodeId_c ConvertFromCPP_NodeId(const NodeId& src)
-{
-    NodeId_c dest;
-    dest.value = src.value;
-    return dest;
-}
-static inline PinId ConvertToCPP_PinId(const PinId_c& src)
-{
-    PinId dest;
-    dest.value = src.value;
-    return dest;
-}
-static inline PinId_c ConvertFromCPP_PinId(const PinId& src)
-{
-    PinId_c dest;
-    dest.value = src.value;
     return dest;
 }CIMGUI_API Config* ax_NodeEditor_Config_Config_Config(void)
 {

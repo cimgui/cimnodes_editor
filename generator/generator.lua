@@ -96,6 +96,8 @@ local function parseImGuiHeader(header, names, modulename)
 	parser.name_conversion = {Style="cimnodes_editor_Style"}
 	parser.custom_header = custom_header
 	--parser.forced_opaque = {SafeType=true}
+	parser.skip_convert_gen = {NodeId=true, LinkId=true, PinId = true}
+	parser.skip_template = {SafeType=true}
 	parser.forced_nonPOD = {NodeId={{name="value",type="uintptr_t"}}, PinId={{name="value",type="uintptr_t"}}, LinkId= {{name="value",type="uintptr_t"}}}
 	local include_cmd = COMPILER=="cl" and [[ /I ]] or [[ -I ]]
 	local extra_includes = include_cmd.." ../../cimgui "
