@@ -14,11 +14,8 @@ local COMPILER, CPRE, INTERNAL_GENERATION, COMMENTS_GENERATION = cpp2ffi.GetScri
 --------------------------------------------------------------------------
 local cimgui_manuals = {
 ax_NodeEditor_NodeId="NodeId",
-NodeId_destroy="NodeId",
 ax_NodeEditor_PinId="PinId",
-PinId_destroy="PinId",
 ax_NodeEditor_LinkId="LinkId",
-LinkId_destroy="LinkId",
 ax_NodeEditor_NodeId_value="NodeId",
 ax_NodeEditor_PinId_value="PinId",
 ax_NodeEditor_LinkId_value="LinkId",
@@ -98,7 +95,10 @@ local function parseImGuiHeader(header, names, modulename)
 	parser.cimgui_inherited =  dofile([[../../cimgui/generator/output/structs_and_enums.lua]])
 	parser.name_conversion = {Style="cimnodes_editor_Style"}
 	parser.custom_header = custom_header
-	parser.forced_opaque = {SafeType=true}
+	--parser.forced_opaque = {SafeType=true}
+	parser.skip_convert_gen = {NodeId=true, LinkId=true, PinId = true}
+	parser.skip_template = {SafeType=true}
+	parser.forced_nonPOD = {NodeId={{name="value_c",type="uintptr_t"}}, PinId={{name="value_c",type="uintptr_t"}}, LinkId= {{name="value_c",type="uintptr_t"}}}
 	local include_cmd = COMPILER=="cl" and [[ /I ]] or [[ -I ]]
 	local extra_includes = include_cmd.." ../../cimgui "
 	--..include_cmd.." ../ImGuiColorTextEdit/vendor/regex/include "

@@ -4,46 +4,78 @@
 #include "cimnodes_editor.h"
 #include <cstring>
 
+// Check that the layout of the C POD structs match their C++
+// counterparts. Necessary for array arguments to work.
+static_assert(sizeof(NodeId_c) == sizeof(ax::NodeEditor::NodeId), "NodeId_c size mismatch");
+static_assert(alignof(NodeId_c) == alignof(ax::NodeEditor::NodeId), "NodeId_c alignment mismatch");
+static_assert(sizeof(PinId_c) == sizeof(ax::NodeEditor::PinId), "PinId_c size mismatch");
+static_assert(alignof(PinId_c) == alignof(ax::NodeEditor::PinId), "PinId_c alignment mismatch");
+static_assert(sizeof(LinkId_c) == sizeof(ax::NodeEditor::LinkId), "LinkId_c size mismatch");
+static_assert(alignof(LinkId_c) == alignof(ax::NodeEditor::LinkId), "LinkId_c alignment mismatch");
+
+static inline ax::NodeEditor::NodeId ConvertToCPP_NodeId(const NodeId_c& src)
+{
+    return ax::NodeEditor::NodeId(src.value_c);
+}
+static inline NodeId_c ConvertFromCPP_NodeId(const ax::NodeEditor::NodeId& src)
+{
+    NodeId_c dest;
+    dest.value_c = src.Get();
+    return dest;
+}
+static inline ax::NodeEditor::PinId ConvertToCPP_PinId(const PinId_c& src)
+{
+    return ax::NodeEditor::PinId(src.value_c);
+}
+static inline PinId_c ConvertFromCPP_PinId(const ax::NodeEditor::PinId& src)
+{
+    PinId_c dest;
+    dest.value_c = src.Get();
+    return dest;
+}
+static inline ax::NodeEditor::LinkId ConvertToCPP_LinkId(const LinkId_c& src)
+{
+    return ax::NodeEditor::LinkId(src.value_c);
+}
+static inline LinkId_c ConvertFromCPP_LinkId(const ax::NodeEditor::LinkId& src)
+{
+    LinkId_c dest;
+    dest.value_c = src.Get();
+    return dest;
+}
+
 
 #include "auto_funcs.cpp"
 
 ///manuals
-CIMGUI_API NodeId* ax_NodeEditor_NodeId(uintptr_t val)
+///manuals
+CIMGUI_API NodeId_c ax_NodeEditor_NodeId(uintptr_t val)
 {
-	return IM_NEW(NodeId)(val);
+	NodeId_c self;
+	self.value_c = val;
+	return self;
 }
-CIMGUI_API void NodeId_destroy(NodeId* self)
+CIMGUI_API PinId_c ax_NodeEditor_PinId(uintptr_t val)
 {
-	return IM_DELETE(self);
+	PinId_c self;
+	self.value_c = val;
+	return self;
 }
-CIMGUI_API PinId* ax_NodeEditor_PinId(uintptr_t val)
+CIMGUI_API LinkId_c ax_NodeEditor_LinkId(uintptr_t val)
 {
-	return IM_NEW(PinId)(val);
+	LinkId_c self;
+	self.value_c = val;
+	return self;
 }
-CIMGUI_API void PinId_destroy(PinId* self)
+CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId_c self)
 {
-	return IM_DELETE(self);
+	return self.value_c;
 }
-CIMGUI_API LinkId* ax_NodeEditor_LinkId(uintptr_t val)
+CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId_c self)
 {
-	return IM_NEW(LinkId)(val);
+	return self.value_c;
 }
-CIMGUI_API void LinkId_destroy(LinkId* self)
+CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId_c self)
 {
-	return IM_DELETE(self);
+	return self.value_c;
 }
-CIMGUI_API uintptr_t ax_NodeEditor_NodeId_value(NodeId* self)
-{
-	return self->Get();
-}
-CIMGUI_API uintptr_t ax_NodeEditor_PinId_value(PinId* self)
-{
-	return self->Get();
-}
-CIMGUI_API uintptr_t ax_NodeEditor_LinkId_value(LinkId* self)
-{
-	return self->Get();
-}
-
-
-
